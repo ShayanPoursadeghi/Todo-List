@@ -4,7 +4,7 @@
 
 ## Features
 
-- [x] Feature 1: **Pprioritizing Tasks**
+- [x] Feature 1: **Prioritizing Tasks**
 - [x] Feature 2: **Search between the Tasks**
 - [x] Feature 3: **Responsive UI**
 
