@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_list/data.dart';
+import 'package:todo_list/data/data.dart';
 import 'package:todo_list/main.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final TaskEntity task;
 
-  EditTaskScreen({super.key, required this.task});
+  const EditTaskScreen({super.key, required this.task});
 
   @override
   State<EditTaskScreen> createState() => _EditTaskScreenState();
@@ -25,7 +25,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         elevation: 0,
         backgroundColor: themeData.colorScheme.surface,
         foregroundColor: themeData.colorScheme.onSurface,
-        title: Text('Edit Task'),
+        title: const Text('Edit Task'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
