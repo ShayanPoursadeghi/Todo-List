@@ -1,6 +1,12 @@
-# todo_list
+# todo_list App
 
-A new Flutter project.
+**To-do List App** is a simple Flutter project that demonstrates how to create and manage a task list. It is designed to help users schedule and organize their daily tasks more easily. Built with Flutter, this app runs on Android devices.
+
+## Features
+
+- [x] Feature 1: **Prioritizing Tasks**
+- [x] Feature 2: **Search between the Tasks**
+- [x] Feature 3: **Responsive UI**
 
 ## Getting Started
 
