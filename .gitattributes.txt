@@ -1,0 +1,4 @@
+windows/** linguist-vendored
+*.cpp linguist-vendored
+*.h linguist-vendored
+*.xcworkspace linguist-vendored
