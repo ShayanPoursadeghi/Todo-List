@@ -6,12 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/data/data.dart';
-import 'package:todo_list/data/repo/repository.dart';
 import 'package:todo_list/screens/home/home.dart';
 
 
 const taskBoxName = 'tasks';
-void main() async {
+void main() async { 
 // final Repository<TaskEntity> repository=Repository(HiveTaskDataSource(Hive.box(taskBoxName)));  //without provider
 
   await Hive.initFlutter();

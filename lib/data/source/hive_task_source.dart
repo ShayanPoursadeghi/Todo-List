@@ -23,7 +23,7 @@ class HiveTaskDataSource implements DataSource<TaskEntity>{
   }
   
   @override
-  Future<void> deleteAll() {
+  Future<void> deleteAll(){
     return box.clear();
   }
   
