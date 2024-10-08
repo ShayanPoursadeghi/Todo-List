@@ -1,3 +1,4 @@
+import 'package:todo_list/data/data.dart';
 import 'package:todo_list/data/source/source.dart';
 
 class Repository<T> implements DataSource{
@@ -30,7 +31,7 @@ class Repository<T> implements DataSource{
   }
 
   @override
-  Future<List> getAll({String searchKeyword=''}) {
+  Future<List<T>> getAll({String searchKeyword=''}) {
     return localDataSource.getAll(searchKeyword: searchKeyword);
   }
 

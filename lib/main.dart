@@ -24,7 +24,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: onPrimaryFixedVariant));
   runApp(Provider<Repository<TaskEntity>>(
-    create: (context) => Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName))),
+    create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName))),
     // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
     child: const MyApp()));
 }
