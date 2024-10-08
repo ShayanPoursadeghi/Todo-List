@@ -1,6 +1,6 @@
 # todo_list App
 
-**To-do List App** is a simple Flutter project that demonstrates how to create and manage a task list. It is designed to help users schedule and organize their daily tasks more easily. Built with Flutter, this app runs on Android devices.
+**To-do List App** is a simple Flutter project that demonstrates how to create and manage a task list. It is designed to help users schedule and organize their daily tasks more easily. Built with Flutter, this app runs on Android devices. This App uses Hive DB.
 
 ## Features
 
