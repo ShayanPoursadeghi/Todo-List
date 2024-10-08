@@ -6,32 +6,32 @@ class Repository<T> implements DataSource{
   Repository({required this.localDataSource});
   @override
   Future createOrUpdate(data) {
-    return createOrUpdate(data);
+    return localDataSource.createOrUpdate(data);
   }
 
   @override
   Future<void> delete(data) {
-    return delete(data);
+    return localDataSource.delete(data);
   }
 
   @override
   Future<void> deleteAll() {
-    return deleteAll();
+    return localDataSource.deleteAll();
   }
 
   @override
   Future<void> deleteById(id) {
-    return deleteById(id);
+    return localDataSource.deleteById(id);
   }
 
   @override
   Future findById(id) {
-    return findById(id);
+    return localDataSource.findById(id);
   }
 
   @override
   Future<List> getAll({String searchKeyword=''}) {
-    return getAll(searchKeyword: searchKeyword);
+    return localDataSource.getAll(searchKeyword: searchKeyword);
   }
 
 }

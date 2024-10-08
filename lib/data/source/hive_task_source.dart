@@ -5,7 +5,8 @@ import 'package:todo_list/data/source/source.dart';
 class HiveTaskDataSource implements DataSource<TaskEntity>{
   final Box<TaskEntity> box;
 
-  HiveTaskDataSource({required this.box});
+  HiveTaskDataSource(this.box);
+  // HiveTaskDataSource(Box box, this.box);
   
   @override
   Future<TaskEntity> createOrUpdate(TaskEntity data) async {

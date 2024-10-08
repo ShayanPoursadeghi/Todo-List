@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list/data/data.dart';
+import 'package:todo_list/data/repo/repository.dart';
 import 'package:todo_list/main.dart';
 import 'package:todo_list/screens/edit/edit.dart';
 import 'package:todo_list/widgets.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final box = Hive.box<TaskEntity>(taskBoxName);
+    // final box = Hive.box<TaskEntity>(taskBoxName);
     final themeData = Theme.of(context);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -98,77 +99,27 @@ class HomeScreen extends StatelessWidget {
               child: ValueListenableBuilder<String>(
                 valueListenable: searchKeywordNotifier,
                 builder: (context, value, child) {
-                  return ValueListenableBuilder<Box<TaskEntity>>(
-                      valueListenable: box.listenable(),
-                      builder: (context, box, child) {
-                        final List<TaskEntity> items;
-                        if (controller.text.isEmpty) {
-                          items = box.values.toList();
-                        } else {
-                          items = box.values
-                              .where(
-                                  (task) => task.name.contains(controller.text))
-                              .toList();
-                        }
-                        if (items.isNotEmpty) {
-                          return ListView.builder(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 100),
-                              itemCount: items.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Today',
-                                            //style: themeData.textTheme!.apply(fontSizeFactor: 0.8),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            height: 3,
-                                            margin: const EdgeInsets.only(top: 4),
-                                            decoration: BoxDecoration(
-                                              color: primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(1.5),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      MaterialButton(
-                                          color: const Color(0xffEAEFF5),
-                                          textColor: secondaryTextColor,
-                                          elevation: 0,
-                                          onPressed: () {
-                                            box.clear();
-                                          },
-                                          child: const Row(
-                                            children: [
-                                              Text('Delete All'),
-                                              SizedBox(
-                                                width: 4,
-                                              ),
-                                              Icon(
-                                                CupertinoIcons.delete_solid,
-                                                size: 18,
-                                              ),
-                                            ],
-                                          )),
-                                    ],
-                                  );
-                                } else {
-                                  final TaskEntity task = items[index - 1];
-                                  return TaskItem(task: task);
-                                }
-                              });
-                        } else {
-                          return const EmptyState();
+                  final repository =
+                      Provider.of<Repository<TaskEntity>>(context);
+                  // if (controller.text.isEmpty) {
+
+                  // } else {
+                  //   items = box.values
+                  //       .where((task) => task.name.contains(controller.text))
+                  //       .toList();
+                  // }
+                  return FutureBuilder<List<TaskEntity>>(
+                      future: repository.getAll(searchKeyword: controller.text),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if(snapshot.data!.isNotEmpty){
+                          return TaskList(items: snapshot.data!, themeData: themeData);
+                          }else{
+                            return const EmptyState();
+                          }
+
+                        }else{
+                          return const CircularProgressIndicator();
                         }
                       });
                 },
@@ -181,6 +132,73 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class TaskList extends StatelessWidget {
+  const TaskList({
+    super.key,
+    required this.items,
+    required this.themeData,
+  });
+
+  final List<TaskEntity> items;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+        itemCount: items.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Today',
+                      //style: themeData.textTheme!.apply(fontSizeFactor: 0.8),
+                    ),
+                    Container(
+                      width: 70,
+                      height: 3,
+                      margin: const EdgeInsets.only(top: 4),
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(1.5),
+                      ),
+                    )
+                  ],
+                ),
+                MaterialButton(
+                    color: const Color(0xffEAEFF5),
+                    textColor: secondaryTextColor,
+                    elevation: 0,
+                    onPressed: () {
+                      final taskRepository = Provider.of<Repository<TaskEntity>>(context);
+                      taskRepository.deleteAll();
+                    },
+                    child: const Row(
+                      children: [
+                        Text('Delete All'),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Icon(
+                          CupertinoIcons.delete_solid,
+                          size: 18,
+                        ),
+                      ],
+                    )),
+              ],
+            );
+          } else {
+            final TaskEntity task = items[index - 1];
+            return TaskItem(task: task);
+          }
+        });
+  }
+}
 
 class TaskItem extends StatefulWidget {
   static const double height = 74;
@@ -215,7 +233,7 @@ class _TaskItemState extends State<TaskItem> {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => EditTaskScreen(task: widget.task)));
       },
-      onLongPress: () {            
+      onLongPress: () {
         widget.task.delete();
       },
       child: Container(
@@ -273,4 +291,3 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 }
-
