@@ -99,8 +99,8 @@ class HomeScreen extends StatelessWidget {
               child: ValueListenableBuilder<String>(
                 valueListenable: searchKeywordNotifier,
                 builder: (context, value, child) {
-                  final repository =
-                      Provider.of<Repository<TaskEntity>>(context);
+                  // final repository =
+                  //     Provider.of<Repository<TaskEntity>>(context);
                   // if (controller.text.isEmpty) {
 
                   // } else {
@@ -108,20 +108,26 @@ class HomeScreen extends StatelessWidget {
                   //       .where((task) => task.name.contains(controller.text))
                   //       .toList();
                   // }
-                  return FutureBuilder<List<TaskEntity>>(
-                      future: repository.getAll(searchKeyword: controller.text),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          if(snapshot.data!.isNotEmpty){
-                          return TaskList(items: snapshot.data!, themeData: themeData);
-                          }else{
-                            return const EmptyState();
-                          }
-
-                        }else{
-                          return const CircularProgressIndicator();
-                        }
-                      });
+                  return Consumer<Repository<TaskEntity>>(
+                    builder: (context, repository, child) {
+                      return FutureBuilder<List<TaskEntity>>(
+                          future:
+                              repository.getAll(searchKeyword: controller.text),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data!.isNotEmpty) {
+                                return TaskList(
+                                    items: snapshot.data!,
+                                    themeData: themeData);
+                              } else {
+                                return const EmptyState();
+                              }
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          });
+                    },
+                  );
                 },
               ),
             ),
@@ -175,7 +181,8 @@ class TaskList extends StatelessWidget {
                     textColor: secondaryTextColor,
                     elevation: 0,
                     onPressed: () {
-                      final taskRepository = Provider.of<Repository<TaskEntity>>(context);
+                      final taskRepository =
+                          Provider.of<Repository<TaskEntity>>(context, listen: false);
                       taskRepository.deleteAll();
                     },
                     child: const Row(

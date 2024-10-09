@@ -23,7 +23,7 @@ void main() async {
   await Hive.openBox<TaskEntity>(taskBoxName);
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: onPrimaryFixedVariant));
-  runApp(Provider<Repository<TaskEntity>>(
+  runApp(ChangeNotifierProvider<Repository<TaskEntity>>(
     create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName))),
     // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
     child: const MyApp()));
