@@ -8,7 +8,7 @@ class TaskListStarted extends TaskListEvent{}
 class TaskListSearch extends TaskListEvent{
   final String searchTerm;
 
-  TaskListSearch({required this.searchTerm});
+  TaskListSearch(this.searchTerm);
 }
 
 class TaskListDeletAll extends TaskListEvent{}

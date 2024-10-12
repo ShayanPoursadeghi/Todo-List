@@ -41,7 +41,8 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider<TaskListBloc>(
-        create: (context) => TaskListBloc(context.read<Repository<TaskEntity>>()),
+        create: (context) =>
+            TaskListBloc(context.read<Repository<TaskEntity>>()),
         child: SafeArea(
           child: Column(
             children: [
@@ -87,8 +88,10 @@ class HomeScreen extends StatelessWidget {
                             ]),
                         child: TextField(
                           onChanged: (value) {
+                            context
+                                .read<TaskListBloc>()
+                                .add(TaskListSearch(value));
                             // searchKeywordNotifier.value = controller.text;
-                            context.read<TaskListBloc>().add(TaskListSearch(searchTerm: value));
                           },
                           controller: controller,
                           decoration: const InputDecoration(
@@ -102,28 +105,29 @@ class HomeScreen extends StatelessWidget {
               ),
               Expanded(
                 child: Consumer<Repository<TaskEntity>>(
-                  builder:(context, model, child) {
+                  builder: (context, model, child) {
+                    context.read<TaskListBloc>().add(TaskListStarted());
                     return BlocBuilder<TaskListBloc, TaskListState>(
-                    builder: (context, state) {
-                      context.read<TaskListBloc>().add(TaskListStarted());
-                      if (state is TaskListSuccess) {
-                        return TaskList(items: state.items, themeData: themeData);
-                      } else if (state is TaskListEmpty) {
-                        return const EmptyState();
-                      } else if (state is TaskListLoading ||
-                          state is TaskListInitial) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (state is TaskListError) {
-                        return Center(
-                          child: Text(state.errorMessage),
-                        );
-                      } else {
-                        throw Exception('State is invalid!');
-                      }
-                    },
-                  );
+                      builder: (context, state) {
+                        if (state is TaskListSuccess) {
+                          return TaskList(
+                              items: state.items, themeData: themeData);
+                        } else if (state is TaskListEmpty) {
+                          return const EmptyState();
+                        } else if (state is TaskListLoading ||
+                            state is TaskListInitial) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is TaskListError) {
+                          return Center(
+                            child: Text(state.errorMessage),
+                          );
+                        } else {
+                          throw Exception('State is invalid!');
+                        }
+                      },
+                    );
                   },
                 ),
                 // ValueListenableBuilder<String>(
