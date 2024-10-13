@@ -12,7 +12,7 @@ Tasks are persisted locally using Hive so they are retained even after closing t
 Smooth UI with a confirmation dialog before deleting a task.
 
 <h2>📂 Folder Structure</h2>
-lib/
+<pre>lib/
 ├── data/
 │   ├── repo/
 │   │   └── repository.dart     # Handles repository logic for tasks
@@ -34,7 +34,7 @@ lib/
 │
 ├── main.dart                    # Entry point for the Flutter app
 ├── widgets.dart                 # Custom UI widgets such as TaskItem, EmptyState, etc.
-
+</pre>
 
 <h2>🚀 Getting Started</h2>
 <h3>Prerequisites</h3>
@@ -48,17 +48,29 @@ To run the project, ensure you have the following installed:
 
 <h3>Installation</h3>
 1. Clone the repository:
- git clone https://github.com/ShayanPoursadeghi/Todo-List.git
-cd todo-list-app
 
+```bash
+git clone https://github.com/ShayanPoursadeghi/Todo-List.git
+cd todo-list-app 
+```
+    
 2. Install the dependencies:
+
+```bash
 flutter pub get
+```
 
 3. Set up Hive for the project:
+
+```bash
 flutter packages pub run build_runner build
+```
 
 4. Run the app:
+
+```bash
 flutter run
+```
 
 <h2>🛠 Technologies Used</h2>
 
@@ -96,7 +108,7 @@ By clicking the checkbox next to each task, the user can toggle the completion s
 
 <h2>🖼️ Screenshots</h2>
 
-| **Home Screen**                     | **Add/Edit Task Screen**                               | **Filtering tasks by search**                     |
+|       **Home Screen**                     |       **Add/Edit Task Screen**                               |      **Filtering tasks by search**                     |
 
 | <img src="screenshots/home_screen.png" width="300"/> | <img src="screenshots/add-edit_screen.png" width="300"/> | <img src="screenshots/search.png" width="300"/> |
 
@@ -105,7 +117,9 @@ By clicking the checkbox next to each task, the user can toggle the completion s
 Feel free to fork this repository and contribute by submitting a pull request. Any contributions, whether they're bug fixes or new features, are welcome.
 
 <h2>📄 License</h2>
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details. 
+
 
 <h2>📧 Contact</h2>
-For questions, feel free to reach out to me at [sh.psadeghi@gmail.com].
+For questions, feel free to reach out to me at [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com). 
+
