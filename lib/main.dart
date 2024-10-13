@@ -3,11 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/data/data.dart';
 import 'package:todo_list/data/repo/repository.dart';
+import 'package:todo_list/screens/home/bloc/task_list_bloc.dart';
 import 'package:todo_list/screens/home/home.dart';
 
 import 'data/source/hive_task_source.dart';
@@ -23,10 +25,23 @@ void main() async {
   await Hive.openBox<TaskEntity>(taskBoxName);
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: onPrimaryFixedVariant));
-  runApp(ChangeNotifierProvider<Repository<TaskEntity>>(
-    create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName))),
-    // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
-    child: const MyApp()));
+  runApp(MultiProvider(
+    providers: [
+ChangeNotifierProvider<Repository<TaskEntity>>(
+      create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName)))),
+      BlocProvider<TaskListBloc>(
+          create: (context) => TaskListBloc(context.read<Repository<TaskEntity>>()),
+        ),
+  ],
+
+      // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
+      child: const MyApp()),
+  );
+  //     child: ChangeNotifierProvider<Repository<TaskEntity>>(
+  //     create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName))),
+  //     // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
+  //     child: const MyApp()),
+  // ));
 }
 
 const Color primaryColor = Color(0xff794CFF);
@@ -45,6 +60,7 @@ class MyApp extends StatelessWidget {
     const primaryTextColor = Color(0xff1D2830);
 
     return MaterialApp(
+
       title: 'Flutter Demo',
       theme: ThemeData(
           // This is the theme of your application.

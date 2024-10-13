@@ -42,7 +42,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: BlocProvider<TaskListBloc>(
         create: (context) =>
-            TaskListBloc(context.read<Repository<TaskEntity>>()),
+        BlocProvider.of<TaskListBloc>(context),
+            // TaskListBloc(context.read<Repository<TaskEntity>>()),
         child: SafeArea(
           child: Column(
             children: [
@@ -88,14 +89,17 @@ class HomeScreen extends StatelessWidget {
                             ]),
                         child: TextField(
                           onChanged: (value) {
-                            context
-                                .read<TaskListBloc>()
-                                .add(TaskListSearch(value));
+                            BlocProvider.of<TaskListBloc>(context).add(TaskListSearch(value));
+                            // context
+                            //     .read<TaskListBloc>()
+                            //     .add(TaskListSearch(value));
+
                             // searchKeywordNotifier.value = controller.text;
                           },
                           controller: controller,
                           decoration: const InputDecoration(
                               prefixIcon: Icon(CupertinoIcons.search),
+                              //  hintText: 'Search tasks...',
                               label: Text('Search Tasks')),
                         ),
                       )

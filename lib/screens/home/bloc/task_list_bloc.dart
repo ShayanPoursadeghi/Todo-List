@@ -13,9 +13,10 @@ class TaskListBloc extends Bloc<TaskListEvent, TaskListState> {
       if (event is TaskListStarted || event is TaskListSearch) {
         final String searchTerm;
         emit(TaskListLoading());
-        // await Future.delayed(const Duration(seconds: 1));
+         await Future.delayed(const Duration(seconds: 1));
         if (event is TaskListSearch) {
           searchTerm = event.searchTerm;
+          // print("Search Term: $searchTerm");  // Debugging
         } else {
           searchTerm = '';
         }
