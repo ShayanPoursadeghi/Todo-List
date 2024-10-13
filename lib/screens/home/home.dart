@@ -272,8 +272,10 @@ class _TaskItemState extends State<TaskItem> {
             builder: (context) => EditTaskScreen(task: widget.task)));
       },
       onLongPress: () {
-        widget.task.delete();
-      },
+        // widget.task.delete();
+       
+  _showDeleteConfirmationDialog(context, widget.task);
+ },
       child: Container(
         height: TaskItem.height,
         margin: const EdgeInsets.only(top: 8),
@@ -329,3 +331,44 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 }
+
+void _showDeleteConfirmationDialog(BuildContext context, TaskEntity task) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Delete Task"),
+        content: const Text("Are you sure you want to delete this task?"),
+        actions: [
+          TextButton(
+            child: const Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog without deleting
+            },
+          ),
+          TextButton(
+            child: const Text("Delete"),
+            onPressed: () {
+              task.delete(); // Delete the task
+              
+            // After task.delete(), add this line to refresh the list
+              context.read<TaskListBloc>().add(TaskListStarted());
+
+
+              // Optional: Provide feedback to the user
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Task deleted successfully"),
+                ),
+              );
+
+              // Close the dialog
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
