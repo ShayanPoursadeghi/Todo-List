@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_list/data/data.dart';
 import 'package:todo_list/data/repo/repository.dart';
 import 'package:todo_list/main.dart';
+import 'package:todo_list/screens/edit/cubit/edit_task_cubit.dart';
 import 'package:todo_list/screens/edit/edit.dart';
 import 'package:todo_list/screens/home/bloc/task_list_bloc.dart';
 import 'package:todo_list/widgets.dart';
@@ -23,8 +24,12 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => EditTaskScreen(
-                    task: TaskEntity(),
+              builder: (context) => BlocProvider<EditTaskCubit>(
+                    create: (context) => EditTaskCubit(
+                        TaskEntity(), context.read<Repository<TaskEntity>>()),
+                    child: const EditTaskScreen(
+                        // task: TaskEntity(),
+                        ),
                   )));
         },
         label: const Row(
@@ -41,9 +46,8 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider<TaskListBloc>(
-        create: (context) =>
-        BlocProvider.of<TaskListBloc>(context),
-            // TaskListBloc(context.read<Repository<TaskEntity>>()),
+        create: (context) => BlocProvider.of<TaskListBloc>(context),
+        // TaskListBloc(context.read<Repository<TaskEntity>>()),
         child: SafeArea(
           child: Column(
             children: [
@@ -89,7 +93,8 @@ class HomeScreen extends StatelessWidget {
                             ]),
                         child: TextField(
                           onChanged: (value) {
-                            BlocProvider.of<TaskListBloc>(context).add(TaskListSearch(value));
+                            BlocProvider.of<TaskListBloc>(context)
+                                .add(TaskListSearch(value));
                             // context
                             //     .read<TaskListBloc>()
                             //     .add(TaskListSearch(value));
@@ -269,13 +274,17 @@ class _TaskItemState extends State<TaskItem> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EditTaskScreen(task: widget.task)));
+            builder: (context) => BlocProvider<EditTaskCubit>(
+                  create: (context) => EditTaskCubit(widget.task, context.read<Repository<TaskEntity>>()),
+                  child: const EditTaskScreen(),
+                )));
+        // => EditTaskScreen(task: widget.task)));
       },
       onLongPress: () {
         // widget.task.delete();
-       
-  _showDeleteConfirmationDialog(context, widget.task);
- },
+
+        _showDeleteConfirmationDialog(context, widget.task);
+      },
       child: Container(
         height: TaskItem.height,
         margin: const EdgeInsets.only(top: 8),
@@ -350,10 +359,9 @@ void _showDeleteConfirmationDialog(BuildContext context, TaskEntity task) {
             child: const Text("Delete"),
             onPressed: () {
               task.delete(); // Delete the task
-              
-            // After task.delete(), add this line to refresh the list
-              context.read<TaskListBloc>().add(TaskListStarted());
 
+              // After task.delete(), add this line to refresh the list
+              context.read<TaskListBloc>().add(TaskListStarted());
 
               // Optional: Provide feedback to the user
               ScaffoldMessenger.of(context).showSnackBar(
@@ -371,4 +379,3 @@ void _showDeleteConfirmationDialog(BuildContext context, TaskEntity task) {
     },
   );
 }
-
