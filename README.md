@@ -1,15 +1,19 @@
 <h1>📋 Todo List App</h1>
 
-This Todo List App is a Flutter application that allows users to create, edit, and manage their tasks efficiently. It also supports searching tasks, filtering based on input, deleting all tasks, and more. The app uses Hive for local storage of tasks and BLoC (Business Logic Component) for state management. This is a great starter app for keeping track of your daily tasks!
+This Todo List App is a Flutter application that allows users to create, edit, and manage their tasks with different priority levels efficiently. It also supports searching tasks, filtering based on input, deleting all tasks, and more. The app uses **Hive** for local storage of tasks and **BLoC** (Business Logic Component) and **Cubit** for state management. This is a great starter app for keeping track of your daily tasks!
 
 <h2>📱 Features</H2>
-Add new tasks with a priority (low, normal, high).
-Edit existing tasks.
-Search for tasks using a search bar.
-Mark tasks as complete or incomplete.
-Delete individual tasks or delete all tasks at once.
-Tasks are persisted locally using Hive so they are retained even after closing the app.
-Smooth UI with a confirmation dialog before deleting a task.
+
+- **Task Management**: Create, edit, and delete tasks.
+- **Task Priority**: Assign priorities (Low, Normal, High) to tasks.
+- **Task Search**: Search through tasks with a search bar.
+- **State Management**: Uses Bloc and Cubit for managing states.
+- **Task Completion**: Mark tasks as completed or uncompleted.
+- **Friendly UI**: Smooth UI with a confirmation dialog before deleting a task. You can delete individual tasks or delete all tasks at once.
+- **Persistent Storage**: Tasks are stored and fetched via a repository, and persisted locally using Hive, ensuring they are retained even after closing the app.
+
+
+
 
 <h2>📂 Folder Structure</h2>
 <pre>lib/
@@ -24,7 +28,10 @@ Smooth UI with a confirmation dialog before deleting a task.
 │
 ├── screens/
 │   ├── edit/
-│   │   └── edit.dart            # Screen for creating or editing tasks
+│   │   ├── edit.dart            # Screen for creating or editing tasks
+│   │   ├── cubit/
+│   │   │   ├── edit_task_cubit.dart      # Cubit for editing task states
+│   │   │   ├── edit_task_state.dart      # States for EditTaskCubit   
 │   ├── home/
 │   │   ├── home.dart            # Main screen with task list, search, and delete functionality
 │   │   ├── bloc/
@@ -51,7 +58,7 @@ To run the project, ensure you have the following installed:
 
 ```bash
 git clone https://github.com/ShayanPoursadeghi/Todo-List.git
-cd todo-list-app 
+cd Todo-List 
 ```
     
 2. Install the dependencies:
@@ -114,12 +121,18 @@ By clicking the checkbox next to each task, the user can toggle the completion s
 
 
 <h2>👨‍💻 Contributing</h2>
-Feel free to fork this repository and contribute by submitting a pull request. Any contributions, whether they're bug fixes or new features, are welcome.
+We welcome contributions to this project! If you want to contribute:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and test them.
+4. Submit a pull request for review.
 
 <h2>📄 License</h2>
 This project is licensed under the MIT License - see the LICENSE file for details. 
 
-
 <h2>📧 Contact</h2>
-For questions, feel free to reach out to me at [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com). 
+Feel free to reach out if you have any questions or suggestions:
+
+- **Email**: [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com). 
 
