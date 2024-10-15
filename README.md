@@ -143,7 +143,7 @@ We welcome contributions to this project! If you want to contribute:
 
 <h2>📄 License</h2>
 
-This project is licensed under the MIT License - see the [License](https://opensource.org/license/mit) file for details. 
+This project is licensed under the MIT License - see the [License](./LICENSE) file for details. 
 
 <h2>📧 Contact</h2>
 
