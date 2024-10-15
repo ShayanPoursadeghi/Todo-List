@@ -7,10 +7,11 @@ This Todo List App is a Flutter application that allows users to create, edit, a
 - **Task Management**: Create, edit, and delete tasks.
 - **Task Priority**: Assign priorities (Low, Normal, High) to tasks.
 - **Task Search**: Search through tasks with a search bar.
-- **State Management**: Uses Bloc and Cubit for managing states.
 - **Task Completion**: Mark tasks as completed or uncompleted.
+- **State Management**: Uses **Bloc** and **Cubit** for managing states.
+- **Persistent Storage**: Tasks are stored and fetched via a repository, and persisted locally using **Hive**, ensuring they are retained even after closing the app.
 - **Friendly UI**: Smooth UI with a confirmation dialog before deleting a task. You can delete individual tasks or delete all tasks at once.
-- **Persistent Storage**: Tasks are stored and fetched via a repository, and persisted locally using Hive, ensuring they are retained even after closing the app.
+
 
 
 
@@ -47,11 +48,11 @@ This Todo List App is a Flutter application that allows users to create, edit, a
 <h3>Prerequisites</h3>
 To run the project, ensure you have the following installed:
 
-- Flutter SDK
-- Dart SDK
-- Hive (for local storage)
-- Provider (for dependency injection)
-- BLoC (for state management)
+- [Flutter SDK](https://docs.flutter.dev/get-started/install)
+- [Dart SDK](https://dart.dev/get-dart)
+- [Hive](https://pub.dev/packages/hive_flutter/install) (for local storage)
+- [Provider](https://pub.dev/packages/provider/install) (for dependency injection)
+- [BLoC](https://pub.dev/packages/flutter_bloc/install) (for state management)      (It contains both Cubit and Bloc instances)
 
 <h3>Installation</h3>
 1. Clone the repository:
@@ -88,24 +89,26 @@ flutter run
 - **Google Fonts**: For custom typography in the app.
 
 <h2>🧩 BLoC Architecture Overview</h2>
-This project follows the BLoC architecture pattern to separate business logic from the UI layer. Here's how the BLoC structure works:
 
-- **Events**: Users' actions (e.g., searching for tasks, deleting tasks) are turned into events like TaskListSearch and TaskListDeleteAll.
-- **States**: The app reacts to events by emitting new states such as TaskListLoading, TaskListSuccess, TaskListEmpty, etc.
+This project follows the **BLoC** architecture pattern to separate business logic from the UI layer. Here's how the BLoC structure works:
+- **Events**: Users' actions (e.g., searching for tasks, deleting tasks) are turned into events like <code>TaskListSearch</code> and <code>TaskListDeleteAll</code>.
+- **States**: The app reacts to events by emitting new states such as <code>TaskListLoading</code>, <code>TaskListSuccess</code>, <code>TaskListEmpty</code>, etc.
 - **BLoC (task_list_bloc.dart)**: Contains all the logic that reacts to events and emits states. It works as the "middle-man" between the UI and the data source.
 
 <h2>🗃️ Hive Integration</h2>
-The app uses Hive for storing tasks locally in a fast, key-value store. The following entities are stored in Hive:
 
+The app uses **Hive** for storing tasks locally in a fast, key-value store. The following entities are stored in Hive:
 - **TaskEntity**: Each task that the user creates is stored with an ID, name, priority, and completed status.
 - **Priority**: Represents the priority of the task (low, normal, or high).
 
 <h2>💡 Features Breakdown</h2>
+
 <h3>Adding a Task</h3>
-You can add new tasks by clicking the Add New Task button. Tasks are saved with a priority and name, and they persist in the local storage using Hive.
+You can add new tasks by clicking the <code>Add New Task</code> button. Tasks are saved with a priority and name, and they persist in the local storage using Hive.
 
 <h3>Searching for Tasks</h3>
-The search bar allows users to filter tasks by typing in keywords. The app uses BLoC to handle the search and update the UI with the filtered tasks.
+
+The search bar allows users to filter tasks by typing in keywords. The app uses **BLoC** to handle the search and update the UI with the filtered tasks.
 
 <h3>Deleting Tasks</h3>
 To delete a task, long-press the task item. The app will ask for confirmation before permanently removing it from the list.
@@ -115,12 +118,20 @@ By clicking the checkbox next to each task, the user can toggle the completion s
 
 <h2>🖼️ Screenshots</h2>
 
-|       **Home Screen**                     |       **Add/Edit Task Screen**                               |      **Filtering tasks by search**                     |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Home Screen** 
 
-| <img src="screenshots/home_screen.png" width="300"/> | <img src="screenshots/add-edit_screen.png" width="300"/> | <img src="screenshots/search.png" width="300"/> |
+<img src="screenshots/home_screen.png" width="300"/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Add/Edit Task Screen**  
+<img src="screenshots/add-edit_screen.png" width="300"/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Filtering tasks by search**         
+<img src="screenshots/search.png" width="300"/>
+
 
 
 <h2>👨‍💻 Contributing</h2>
+
 We welcome contributions to this project! If you want to contribute:
 
 1. Fork the repository.
@@ -129,9 +140,11 @@ We welcome contributions to this project! If you want to contribute:
 4. Submit a pull request for review.
 
 <h2>📄 License</h2>
-This project is licensed under the MIT License - see the LICENSE file for details. 
+
+This project is licensed under the MIT License - see the [License](https://opensource.org/license/mit) file for details. 
 
 <h2>📧 Contact</h2>
+
 Feel free to reach out if you have any questions or suggestions:
 
 - **Email**: [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com). 
