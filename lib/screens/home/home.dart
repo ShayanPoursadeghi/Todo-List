@@ -219,7 +219,10 @@ class TaskList extends StatelessWidget {
                       //     Provider.of<Repository<TaskEntity>>(context,
                       //         listen: false);
                       // taskRepository.deleteAll();
-                      context.read<TaskListBloc>().add(TaskListDeletAll());
+
+                      // context.read<TaskListBloc>().add(TaskListDeletAll());
+
+                       _showDeleteAllConfirmationDialog(context);
                     },
                     child: const Row(
                       children: [
@@ -367,6 +370,44 @@ void _showDeleteConfirmationDialog(BuildContext context, TaskEntity task) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Task deleted successfully"),
+                ),
+              );
+
+              // Close the dialog
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _showDeleteAllConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Delete All Tasks"),
+        content: const Text("Are you sure you want to delete all tasks? This action cannot be undone!"),
+        actions: [
+          TextButton(
+            child: const Text("Cancel"),
+            onPressed: () {
+              // Close the dialog without deleting anything
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text("Delete All"),
+            onPressed: () {
+              // Trigger the action to delete all tasks
+              context.read<TaskListBloc>().add(TaskListDeletAll());
+
+              // Provide feedback to the user
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("All tasks deleted successfully"),
                 ),
               );
 

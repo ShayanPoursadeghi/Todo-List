@@ -55,6 +55,7 @@ To run the project, ensure you have the following installed:
 - [BLoC](https://pub.dev/packages/flutter_bloc/install) (for state management)      (It contains both Cubit and Bloc instances)
 
 <h3>Installation</h3>
+
 1. Clone the repository:
 
 ```bash
