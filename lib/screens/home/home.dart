@@ -13,11 +13,9 @@ import 'package:todo_list/widgets.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final TextEditingController controller = TextEditingController();
-  // final ValueNotifier<String> searchKeywordNotifier = ValueNotifier('');
 
   @override
   Widget build(BuildContext context) {
-    // final box = Hive.box<TaskEntity>(taskBoxName);
     final themeData = Theme.of(context);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -27,9 +25,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => BlocProvider<EditTaskCubit>(
                     create: (context) => EditTaskCubit(
                         TaskEntity(), context.read<Repository<TaskEntity>>()),
-                    child: const EditTaskScreen(
-                        // task: TaskEntity(),
-                        ),
+                    child: const EditTaskScreen(),
                   )));
         },
         label: const Row(
@@ -47,7 +43,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: BlocProvider<TaskListBloc>(
         create: (context) => BlocProvider.of<TaskListBloc>(context),
-        // TaskListBloc(context.read<Repository<TaskEntity>>()),
         child: SafeArea(
           child: Column(
             children: [
@@ -95,11 +90,6 @@ class HomeScreen extends StatelessWidget {
                           onChanged: (value) {
                             BlocProvider.of<TaskListBloc>(context)
                                 .add(TaskListSearch(value));
-                            // context
-                            //     .read<TaskListBloc>()
-                            //     .add(TaskListSearch(value));
-
-                            // searchKeywordNotifier.value = controller.text;
                           },
                           controller: controller,
                           decoration: const InputDecoration(
@@ -139,30 +129,6 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-                // ValueListenableBuilder<String>(
-                //   // valueListenable: searchKeywordNotifier,
-                //   builder: (context, value, child) {
-                //     // final repository =
-                //     //     Provider.of<Repository<TaskEntity>>(context);
-                //     // if (controller.text.isEmpty) {
-
-                //     // } else {
-                //     //   items = box.values
-                //     //       .where((task) => task.name.contains(controller.text))
-                //     //       .toList();
-                //     // }
-                //     return Consumer<Repository<TaskEntity>>(
-                //       builder: (context, repository, child) {
-                //         return FutureBuilder<List<TaskEntity>>(
-                //             future:
-                //                 repository.getAll(searchKeyword: controller.text),
-                //             builder: (context, snapshot) {
-
-                //             });
-                //       },
-                //     );
-                //   },
-                // ),
               ),
             ],
           ),
@@ -197,7 +163,6 @@ class TaskList extends StatelessWidget {
                   children: [
                     const Text(
                       'Today',
-                      //style: themeData.textTheme!.apply(fontSizeFactor: 0.8),
                     ),
                     Container(
                       width: 70,
@@ -215,14 +180,7 @@ class TaskList extends StatelessWidget {
                     textColor: secondaryTextColor,
                     elevation: 0,
                     onPressed: () {
-                      // final taskRepository =
-                      //     Provider.of<Repository<TaskEntity>>(context,
-                      //         listen: false);
-                      // taskRepository.deleteAll();
-
-                      // context.read<TaskListBloc>().add(TaskListDeletAll());
-
-                       _showDeleteAllConfirmationDialog(context);
+                      _showDeleteAllConfirmationDialog(context);
                     },
                     child: const Row(
                       children: [
@@ -278,14 +236,12 @@ class _TaskItemState extends State<TaskItem> {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => BlocProvider<EditTaskCubit>(
-                  create: (context) => EditTaskCubit(widget.task, context.read<Repository<TaskEntity>>()),
+                  create: (context) => EditTaskCubit(
+                      widget.task, context.read<Repository<TaskEntity>>()),
                   child: const EditTaskScreen(),
                 )));
-        // => EditTaskScreen(task: widget.task)));
       },
       onLongPress: () {
-        // widget.task.delete();
-
         _showDeleteConfirmationDialog(context, widget.task);
       },
       child: Container(
@@ -366,7 +322,7 @@ void _showDeleteConfirmationDialog(BuildContext context, TaskEntity task) {
               // After task.delete(), add this line to refresh the list
               context.read<TaskListBloc>().add(TaskListStarted());
 
-              // Optional: Provide feedback to the user
+              // Provide feedback to the user
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Task deleted successfully"),
@@ -389,7 +345,8 @@ void _showDeleteAllConfirmationDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text("Delete All Tasks"),
-        content: const Text("Are you sure you want to delete all tasks? This action cannot be undone!"),
+        content: const Text(
+            "Are you sure you want to delete all tasks? This action cannot be undone!"),
         actions: [
           TextButton(
             child: const Text("Cancel"),

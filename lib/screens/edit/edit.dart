@@ -1,19 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list/data/data.dart';
-import 'package:todo_list/data/repo/repository.dart';
 import 'package:todo_list/main.dart';
 import 'package:todo_list/screens/edit/cubit/edit_task_cubit.dart';
 
 class EditTaskScreen extends StatefulWidget {
-  // final TaskEntity task;
-
   const EditTaskScreen({
     super.key,
-  }); //required this.task});
+  });
 
   @override
   State<EditTaskScreen> createState() => _EditTaskScreenState();
@@ -21,7 +16,6 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
   late final TextEditingController _controller;
-  // = TextEditingController(text: widget.task.name);
 
   @override
   void initState() {
@@ -45,21 +39,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             context.read<EditTaskCubit>().onSaveChangesClick();
-            // final task = TaskEntity();
 
-            // widget.task.name = _controller.text;
-            // widget.task.priority = widget.task.priority;
-
-            // if (widget.task.isInBox) {
-            // widget.task.save();
-            // } else {
-            //  final Box<TaskEntity> box = Hive.box(taskBoxName);
-            //   box.add(widget.task);
-            // }
-
-            // final repository =
-            //     Provider.of<Repository<TaskEntity>>(context, listen: false);
-            //     repository.createOrUpdate(widget.task);
             Navigator.of(context).pop();
           },
           label: const Row(
@@ -87,15 +67,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           label: 'High',
                           color: primaryColor,
                           isSelected: priority == Priority.high,
-
-                          // isSelected: widget.task.priority == Priority.high,
                           onTap: () {
                             context
                                 .read<EditTaskCubit>()
                                 .onPriorityChanged(Priority.high);
-                            // setState(() {
-                            //   widget.task.priority = Priority.high;
-                            // });
                           },
                         )),
                     const SizedBox(
@@ -107,16 +82,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           label: 'Normal',
                           color: normalPriority,
                           isSelected: priority == Priority.normal,
-
-                          // isSelected: widget.task.priority == Priority.normal,
                           onTap: () {
                             context
                                 .read<EditTaskCubit>()
                                 .onPriorityChanged(Priority.normal);
-
-                            // setState(() {
-                            //   widget.task.priority = Priority.normal;
-                            // });
                           },
                         )),
                     const SizedBox(
@@ -128,16 +97,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           label: 'Low',
                           color: lowPriority,
                           isSelected: priority == Priority.low,
-
-                          // isSelected: widget.task.priority == Priority.low,
                           onTap: () {
                             context
                                 .read<EditTaskCubit>()
                                 .onPriorityChanged(Priority.low);
-
-                            // setState(() {
-                            //   widget.task.priority = Priority.low;
-                            // });
                           },
                         )),
                   ],

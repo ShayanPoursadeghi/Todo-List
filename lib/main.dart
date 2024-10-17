@@ -1,6 +1,3 @@
-// import 'dart:ffi';
-// import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,37 +8,27 @@ import 'package:todo_list/data/data.dart';
 import 'package:todo_list/data/repo/repository.dart';
 import 'package:todo_list/screens/home/bloc/task_list_bloc.dart';
 import 'package:todo_list/screens/home/home.dart';
-
 import 'data/source/hive_task_source.dart';
 
-
 const taskBoxName = 'tasks';
-void main() async { 
-// final Repository<TaskEntity> repository=Repository(HiveTaskDataSource(Hive.box(taskBoxName)));  //without provider
-
+void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(PriorityAdapter());
   await Hive.openBox<TaskEntity>(taskBoxName);
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: onPrimaryFixedVariant));
-  runApp(MultiProvider(
-    providers: [
-ChangeNotifierProvider<Repository<TaskEntity>>(
-      create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName)))),
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider<Repository<TaskEntity>>(
+          create: (context) => Repository<TaskEntity>(
+              localDataSource: HiveTaskDataSource(Hive.box(taskBoxName)))),
       BlocProvider<TaskListBloc>(
-          create: (context) => TaskListBloc(context.read<Repository<TaskEntity>>()),
-        ),
-  ],
-
-      // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
-      child: const MyApp()),
+        create: (context) =>
+            TaskListBloc(context.read<Repository<TaskEntity>>()),
+      ),
+    ], child: const MyApp()),
   );
-  //     child: ChangeNotifierProvider<Repository<TaskEntity>>(
-  //     create: (context) => Repository<TaskEntity>(localDataSource: HiveTaskDataSource(Hive.box(taskBoxName))),
-  //     // create: (BuildContext context) {Repository<TaskEntity>(HiveTaskDataSource(Hive.box(taskBoxName)));  },
-  //     child: const MyApp()),
-  // ));
 }
 
 const Color primaryColor = Color(0xff794CFF);
@@ -60,7 +47,6 @@ class MyApp extends StatelessWidget {
     const primaryTextColor = Color(0xff1D2830);
 
     return MaterialApp(
-
       title: 'Flutter Demo',
       theme: ThemeData(
           // This is the theme of your application.
@@ -81,7 +67,8 @@ class MyApp extends StatelessWidget {
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           // useMaterial3: true,
           textTheme: GoogleFonts.poppinsTextTheme(
-            const TextTheme(headlineSmall: TextStyle(fontWeight: FontWeight.bold)),
+            const TextTheme(
+                headlineSmall: TextStyle(fontWeight: FontWeight.bold)),
           ),
           inputDecorationTheme: const InputDecorationTheme(
             floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -103,4 +90,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

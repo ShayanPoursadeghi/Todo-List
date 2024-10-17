@@ -10,7 +10,6 @@ class TaskListLoading extends TaskListState{}
 class TaskListSuccess extends TaskListState{
   final List<TaskEntity> items;
 
-  // TaskListSuccess(List<TaskEntity> items, {required this.items});
   TaskListSuccess(this.items);
 
 }
