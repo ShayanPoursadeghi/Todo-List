@@ -150,5 +150,6 @@ This project is licensed under the MIT License - see the [License](./LICENSE) fi
 
 Feel free to reach out if you have any questions or suggestions:
 
-- **Email**: [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com). 
+- **Email**: [sh.psadeghi@gmail.com](mailto:sh.psadeghi@gmail.com)
+- **Linkedin**: [shayan-poursadeghi](https://www.linkedin.com/in/shayan-poursadeghi/)
 
